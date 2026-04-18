@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+build/
+dist/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Secrets
+.env
+*.pem
+
+# Project: raw data is gitignored except the manifest and README
+/data/raw/*
+!/data/raw/manifest.csv
+!/data/raw/README.md
+
+# Project: processed data and figures are not committed
+/data/processed/*
+!/data/processed/.gitkeep
+/figures/*
+!/figures/.gitkeep
