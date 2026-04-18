@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-18 22:15 — Hand-upload path prepped for SPC tornado CSV
+State: BLOCKED (waiting on Una's upload)
+PR: —
+Branch: `claude/verify-spc-endpoint-pBdvG`
+Summary: Switched to option (4) from the earlier unblock menu: Una hand-uploads the SPC tornado CSV via the GitHub web UI. Prepped on this branch: `.gitignore` exception for `data/raw/spc/**`, empty `data/raw/spc/.gitkeep`, deviation entry at `docs/deviations.md` documenting the temporary raw-files-in-git policy, and a hand-upload procedure appended to `data/raw/README.md` with a pre-filled manifest row template (only `<SHA256>` and `<BYTES>` need filling in). Scope note: this unblocks only §1.2 SCS tornado; full Phase 1 needs ~20–25 files across §1.1 / §1.2 / §1.3. Awaiting Una to (a) merge/cherry-pick this branch into `phase1-data` or grant permission to push it there directly, (b) upload the CSV to `data/raw/spc/`, and (c) fill in the manifest row.
+
 ## 2026-04-18 22:01 — SPC endpoint re-check: still blocked
 State: BLOCKED
 PR: —

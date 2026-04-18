@@ -27,6 +27,11 @@ Thumbs.db
 /data/raw/*
 !/data/raw/manifest.csv
 !/data/raw/README.md
+# Exception: Phase 1 sandbox cannot reach external hosts, so raw files are
+# hand-uploaded via the GitHub web UI. See docs/deviations.md entry
+# "2026-04-18 — Committing raw files due to sandbox egress block".
+!/data/raw/spc/
+!/data/raw/spc/**
 
 # Project: processed data and figures are not committed
 /data/processed/*
