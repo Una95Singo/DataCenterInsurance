@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-18 22:45 — fetch_raw.py ready for Una to run locally
+State: BLOCKED (waiting on Una to run `make fetch-raw` on a networked machine)
+PR: —
+Branch: `claude/verify-spc-endpoint-pBdvG`
+Summary: Probed the sandbox egress — ALL ten Phase 1 hosts I tested return `403 x-deny-reason: host_not_allowed` (SPC, NCEI, datacentermap, EIA, FCC, FEMA, USGS, Census, PCH, OSM). The earlier INBOX extrapolation was correct: every source is walled off. Rather than have Una hand-upload 20+ files, built a single-shot fetcher he runs on his laptop: `scripts/fetch_raw.py` + `scripts/raw_sources.yaml` registry + `make fetch-raw` target. Active registry currently covers the SPC trio (tornado, hail, wind) — CSVs at `spc.noaa.gov/wcm/data/` that follow a consistent naming pattern. Everything else from plan §1.1 / §1.2 / §1.3 is enumerated under `todo:` in the YAML with a one-line note on what's needed to activate it (scrape, auth, variable filename, etc.). Fetcher is idempotent (skips cached files and dedupes manifest rows), reports failures without crashing, writes rows via `dc_scs.manifest.append_manifest_row` so the hash/byte/timestamp path is identical to what phase-1 scripts will use. Tests: 8 pass (4 existing + 4 new registry sanity checks); ruff clean. Unblock: (1) cherry-pick/merge this branch into `phase1-data` (or grant me permission), (2) `pip install -r requirements.txt && make fetch-raw` on a networked machine, (3) commit `data/raw/` + the updated `manifest.csv` and push. Subsequent sources get added by extending `sources:` in the YAML as URLs are verified.
+
 ## 2026-04-18 22:15 — Hand-upload path prepped for SPC tornado CSV
 State: BLOCKED (waiting on Una's upload)
 PR: —

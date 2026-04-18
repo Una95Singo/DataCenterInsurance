@@ -28,8 +28,10 @@ Thumbs.db
 !/data/raw/manifest.csv
 !/data/raw/README.md
 # Exception: Phase 1 sandbox cannot reach external hosts, so raw files are
-# hand-uploaded via the GitHub web UI. See docs/deviations.md entry
-# "2026-04-18 — Committing raw files due to sandbox egress block".
+# fetched on an external machine via scripts/fetch_raw.py and committed.
+# See docs/deviations.md entry "2026-04-18 — Committing raw files due to
+# sandbox egress block". Whitelist each source subdir that fetch_raw.py
+# writes to (mirrors the pull_ids/local_paths in scripts/raw_sources.yaml).
 !/data/raw/spc/
 !/data/raw/spc/**
 

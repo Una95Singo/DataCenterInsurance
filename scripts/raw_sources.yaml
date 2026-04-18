@@ -1,0 +1,118 @@
+# Phase 1 raw-data source registry.
+#
+# `sources:` — active list. `fetch_raw.py` iterates this and downloads each
+# entry. Adding a source = one new list item. Removing = delete the item
+# (the file and manifest row stay as historical record).
+#
+# `todo:` — sources the plan requires but for which the URL is behind a scrape,
+# an API with auth, a variable filename, or otherwise not a static GET. These
+# are NOT fetched; they exist as a checklist to be resolved incrementally.
+#
+# Per-source fields:
+#   pull_id      — stable short id, also used for manifest row and idempotency
+#   source_name  — human-readable
+#   url          — the GET target
+#   local_path   — repo-relative destination; parent dirs are created
+#   notes        — free-form; shows up in the manifest row
+#
+# URL confidence: the SPC trio follow a well-established naming pattern on
+# spc.noaa.gov/wcm/data/. If the year-range tail drifts (e.g., 1950-2024),
+# the runner will report a 404 and you update the YAML.
+
+sources:
+  - pull_id: spc_tornado_1950_2023
+    source_name: NOAA SPC tornado database
+    url: https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv
+    local_path: data/raw/spc/1950-2023_actual_tornadoes.csv
+    notes: "§1.2 H_reported input; tornado touchdowns with EF rating"
+
+  - pull_id: spc_hail_1955_2023
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/1955-2023_hail.csv
+    local_path: data/raw/spc/1955-2023_hail.csv
+    notes: "§1.2 H_reported input; hail reports (diameter in inches)"
+
+  - pull_id: spc_wind_1955_2023
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/1955-2023_wind.csv
+    local_path: data/raw/spc/1955-2023_wind.csv
+    notes: "§1.2 H_reported input; damaging-wind reports"
+
+# Everything below is a plan-required source that is NOT a static GET.
+# They are listed here so the gaps are explicit and reviewable. Moving any
+# entry into `sources:` requires a verified URL.
+todo:
+  # ---- §1.1 DC inventory ----
+  - pull_id: datacentermap_scrape
+    source_name: datacentermap.com
+    blocker: "HTML scrape; needs paginated crawler with rate limiting"
+  - pull_id: baxtel_scrape
+    source_name: Baxtel
+    blocker: "HTML scrape"
+  - pull_id: cloudscene_scrape
+    source_name: Cloudscene
+    blocker: "HTML scrape; may require account for full detail"
+  - pull_id: aws_regions
+    source_name: AWS regions/AZs
+    blocker: "HTML page at aws.amazon.com/about-aws/global-infrastructure; scrape"
+  - pull_id: azure_regions
+    source_name: Azure regions
+    blocker: "HTML page at azure.microsoft.com; scrape"
+  - pull_id: gcp_regions
+    source_name: GCP regions
+    blocker: "HTML page at cloud.google.com/compute/docs/regions-zones; scrape"
+  - pull_id: osm_data_centers
+    source_name: OpenStreetMap man_made=data_center
+    blocker: "Overpass API query; not a static file"
+  - pull_id: dgtlinfra_aggregates
+    source_name: dgtlinfra metro aggregates
+    blocker: "Published as blog posts; figures must be transcribed"
+
+  # ---- §1.2 SCS hazard (beyond the SPC trio above) ----
+  - pull_id: noaa_storm_events
+    source_name: NOAA Storm Events Database
+    blocker: "Per-year CSV files at ncei.noaa.gov; filename includes a variable compilation code. Need to list current filenames."
+  - pull_id: spc_hail_climatology_grid
+    source_name: SPC hail climatology (80 km grid)
+    blocker: "Pre-computed grid; URL needs verification on spc.noaa.gov"
+  - pull_id: swdi_mesh
+    source_name: SWDI MESH radar-derived hail
+    blocker: "API-based (ncdc.noaa.gov/swdiws); query-by-region + date range"
+  - pull_id: era5_cape
+    source_name: ERA5 CAPE climatology
+    blocker: "Requires CDS account + cdsapi; long-running download"
+
+  # ---- §1.3 covariates ----
+  - pull_id: census_block_groups
+    source_name: US Census TIGER block groups
+    blocker: "50 per-state zips under www2.census.gov/geo/tiger/TIGER2023/BG/"
+  - pull_id: eia_form_861
+    source_name: EIA Form 861 (industrial electricity price)
+    blocker: "Per-year zip under eia.gov/electricity/data/eia861/archive/zip/"
+  - pull_id: fcc_form_477_broadband
+    source_name: FCC Broadband Fabric / Form 477
+    blocker: "Portal downloads at broadbandmap.fcc.gov; per-state"
+  - pull_id: pch_ixp_directory
+    source_name: Packet Clearing House IXP directory
+    blocker: "pch.net; directory has downloadable JSON but URL needs verification"
+  - pull_id: good_jobs_first_subsidies
+    source_name: Good Jobs First Subsidy Tracker
+    blocker: "Search/query UI; may need CSV export"
+  - pull_id: usgs_drought
+    source_name: USGS water / drought monitor
+    blocker: "Multiple API endpoints; scope depends on covariate choice"
+  - pull_id: noaa_cooling_degree_days
+    source_name: NOAA cooling degree days
+    blocker: "ncei.noaa.gov monitoring files; station vs gridded TBD"
+  - pull_id: usgs_nshm_pga
+    source_name: USGS NSHM 2023 (PGA 2%/50yr)
+    blocker: "Gridded data at earthquake.usgs.gov/hazards/hazmaps/; format TBD"
+  - pull_id: fema_nfhl
+    source_name: FEMA NFHL (100-yr flood zones)
+    blocker: "State geodatabases via hazards.fema.gov portal"
+  - pull_id: zillow_land
+    source_name: Zillow research data (land cost proxy)
+    blocker: "zillow.com/research/data; specific series TBD"
+  - pull_id: bls_land
+    source_name: BLS series (land cost proxy)
+    blocker: "Specific series TBD"
