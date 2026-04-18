@@ -1,0 +1,17 @@
+[project]
+name = "dc_scs"
+version = "0.1.0"
+description = "Do NA data centers cluster in severe convective storm risk zones?"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

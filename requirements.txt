@@ -1,0 +1,13 @@
+# Pinned dependencies for the DC/SCS pipeline.
+# Reproducibility is a deliverable — pin everything.
+# Spatial libraries (geopandas, shapely, rasterio) will be added in phase 1
+# as they're first needed; they pull in heavy native deps so we wait.
+
+pandas==2.2.3
+numpy==1.26.4
+requests==2.32.3
+pyyaml==6.0.2
+
+# Dev / CI
+pytest==8.3.3
+ruff==0.7.0
