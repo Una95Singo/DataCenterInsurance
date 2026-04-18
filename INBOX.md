@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-18 22:01 — SPC endpoint re-check: still blocked
+State: BLOCKED
+PR: —
+Branch: `claude/verify-spc-endpoint-pBdvG`
+Summary: Una reported the Phase 1 sandbox allowlist is live and asked to verify via `curl -sSI https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv`. The response is still `HTTP/2 403` with `x-deny-reason: host_not_allowed` (content-type `text/plain`, 21 bytes) — identical to the previous block. The allowlist change has not taken effect in this sandbox, so per plan §1.2 the precondition (200/302) is not met and I did not start the SPC fetcher. **Unblock options for Una:** (1) confirm the allowlist was actually applied to the environment this agent runs in, and that `www.spc.noaa.gov` is on it; (2) if it is, check whether a cache/restart is needed for the sandbox to pick up the new policy; (3) re-trigger an agent session after verification. No files changed besides this INBOX entry.
+
 ## 2026-04-18 — Phase 1 BLOCKED on outbound network
 
 State: BLOCKED
