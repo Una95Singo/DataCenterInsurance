@@ -44,5 +44,5 @@ external hosts, raw files are uploaded via the GitHub web UI. Per file:
 Paste this into `manifest.csv` after upload, then fill in `<SHA256>` and `<BYTES>`:
 
 ```
-spc_tornado_1950_2023,NOAA SPC tornado database,https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv,2026-04-18T00:00:00Z,<SHA256>,<BYTES>,data/raw/spc/1950-2023_actual_tornadoes.csv,hand-uploaded via GitHub UI; sandbox egress blocked
+spc_tornado_1950_2024,NOAA SPC tornado database,https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv,2026-04-19T00:00:00Z,<SHA256>,<BYTES>,data/raw/spc/1950-2024_actual_tornadoes.csv,hand-uploaded via GitHub UI; sandbox egress blocked
 ```

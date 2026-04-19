@@ -20,22 +20,22 @@
 # the runner will report a 404 and you update the YAML.
 
 sources:
-  - pull_id: spc_tornado_1950_2023
+  - pull_id: spc_tornado_1950_2024
     source_name: NOAA SPC tornado database
-    url: https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv
-    local_path: data/raw/spc/1950-2023_actual_tornadoes.csv
+    url: https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv
+    local_path: data/raw/spc/1950-2024_actual_tornadoes.csv
     notes: "§1.2 H_reported input; tornado touchdowns with EF rating"
 
-  - pull_id: spc_hail_1955_2023
+  - pull_id: spc_hail_1955_2024
     source_name: NOAA SPC hail reports
-    url: https://www.spc.noaa.gov/wcm/data/1955-2023_hail.csv
-    local_path: data/raw/spc/1955-2023_hail.csv
+    url: https://www.spc.noaa.gov/wcm/data/1955-2024_hail.csv
+    local_path: data/raw/spc/1955-2024_hail.csv
     notes: "§1.2 H_reported input; hail reports (diameter in inches)"
 
-  - pull_id: spc_wind_1955_2023
+  - pull_id: spc_wind_1955_2024
     source_name: NOAA SPC wind reports
-    url: https://www.spc.noaa.gov/wcm/data/1955-2023_wind.csv
-    local_path: data/raw/spc/1955-2023_wind.csv
+    url: https://www.spc.noaa.gov/wcm/data/1955-2024_wind.csv
+    local_path: data/raw/spc/1955-2024_wind.csv
     notes: "§1.2 H_reported input; damaging-wind reports"
 
 # Everything below is a plan-required source that is NOT a static GET.

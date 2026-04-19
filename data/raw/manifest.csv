@@ -1,2 +1,1 @@
 pull_id,source_name,source_url,pulled_at,sha256,bytes,local_path,notes
-spc_tornado_1950_2023,NOAA SPC tornado database,https://www.spc.noaa.gov/wcm/data/1950-2023_actual_tornadoes.csv,2026-04-19T01:37:14Z,fa616e2f829c553acc7b60f5130a3ac498198e0b9d69e37a0e1289df71dc5fcc,7792330,data/raw/spc/1950-2023_actual_tornadoes.csv,§1.2 H_reported input; tornado touchdowns with EF rating
