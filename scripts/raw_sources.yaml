@@ -24,19 +24,255 @@ sources:
     source_name: NOAA SPC tornado database
     url: https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv
     local_path: data/raw/spc/1950-2024_actual_tornadoes.csv
-    notes: "§1.2 H_reported input; tornado touchdowns with EF rating"
+    notes: "§1.2 H_reported input; tornado touchdowns with EF rating; consolidated 1950-2024"
 
-  - pull_id: spc_hail_1955_2024
+  # SPC does not publish a consolidated 1955-2024 hail CSV;
+  # full coverage = 5 decade + 2 multi-year + 17 yearly files.
+  # Concat happens downstream in Phase 1 processing, not here.
+  - pull_id: spc_hail_1955_1959
     source_name: NOAA SPC hail reports
-    url: https://www.spc.noaa.gov/wcm/data/1955-2024_hail.csv
-    local_path: data/raw/spc/1955-2024_hail.csv
-    notes: "§1.2 H_reported input; hail reports (diameter in inches)"
+    url: https://www.spc.noaa.gov/wcm/data/55-59_hail.csv
+    local_path: data/raw/spc/55-59_hail.csv
+    notes: "§1.2 H_reported input; hail 1955-1959"
+  - pull_id: spc_hail_1960_1969
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/60-69_hail.csv
+    local_path: data/raw/spc/60-69_hail.csv
+    notes: "§1.2 H_reported input; hail 1960-1969"
+  - pull_id: spc_hail_1970_1979
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/70-79_hail.csv
+    local_path: data/raw/spc/70-79_hail.csv
+    notes: "§1.2 H_reported input; hail 1970-1979"
+  - pull_id: spc_hail_1980_1989
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/80-89_hail.csv
+    local_path: data/raw/spc/80-89_hail.csv
+    notes: "§1.2 H_reported input; hail 1980-1989"
+  - pull_id: spc_hail_1990_1999
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/90-99_hail.csv
+    local_path: data/raw/spc/90-99_hail.csv
+    notes: "§1.2 H_reported input; hail 1990-1999"
+  - pull_id: spc_hail_2000_2004
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2000-2004_hail.csv
+    local_path: data/raw/spc/2000-2004_hail.csv
+    notes: "§1.2 H_reported input; hail 2000-2004"
+  - pull_id: spc_hail_2005_2007
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2005-2007_hail.csv
+    local_path: data/raw/spc/2005-2007_hail.csv
+    notes: "§1.2 H_reported input; hail 2005-2007"
+  - pull_id: spc_hail_2008
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2008_hail.csv
+    local_path: data/raw/spc/2008_hail.csv
+    notes: "§1.2 H_reported input; hail 2008"
+  - pull_id: spc_hail_2009
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2009_hail.csv
+    local_path: data/raw/spc/2009_hail.csv
+    notes: "§1.2 H_reported input; hail 2009"
+  - pull_id: spc_hail_2010
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2010_hail.csv
+    local_path: data/raw/spc/2010_hail.csv
+    notes: "§1.2 H_reported input; hail 2010"
+  - pull_id: spc_hail_2011
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2011_hail.csv
+    local_path: data/raw/spc/2011_hail.csv
+    notes: "§1.2 H_reported input; hail 2011"
+  - pull_id: spc_hail_2012
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2012_hail.csv
+    local_path: data/raw/spc/2012_hail.csv
+    notes: "§1.2 H_reported input; hail 2012"
+  - pull_id: spc_hail_2013
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2013_hail.csv
+    local_path: data/raw/spc/2013_hail.csv
+    notes: "§1.2 H_reported input; hail 2013"
+  - pull_id: spc_hail_2014
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2014_hail.csv
+    local_path: data/raw/spc/2014_hail.csv
+    notes: "§1.2 H_reported input; hail 2014"
+  - pull_id: spc_hail_2015
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2015_hail.csv
+    local_path: data/raw/spc/2015_hail.csv
+    notes: "§1.2 H_reported input; hail 2015"
+  - pull_id: spc_hail_2016
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2016_hail.csv
+    local_path: data/raw/spc/2016_hail.csv
+    notes: "§1.2 H_reported input; hail 2016"
+  - pull_id: spc_hail_2017
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2017_hail.csv
+    local_path: data/raw/spc/2017_hail.csv
+    notes: "§1.2 H_reported input; hail 2017"
+  - pull_id: spc_hail_2018
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2018_hail.csv
+    local_path: data/raw/spc/2018_hail.csv
+    notes: "§1.2 H_reported input; hail 2018"
+  - pull_id: spc_hail_2019
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2019_hail.csv
+    local_path: data/raw/spc/2019_hail.csv
+    notes: "§1.2 H_reported input; hail 2019"
+  - pull_id: spc_hail_2020
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2020_hail.csv
+    local_path: data/raw/spc/2020_hail.csv
+    notes: "§1.2 H_reported input; hail 2020"
+  - pull_id: spc_hail_2021
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2021_hail.csv
+    local_path: data/raw/spc/2021_hail.csv
+    notes: "§1.2 H_reported input; hail 2021"
+  - pull_id: spc_hail_2022
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2022_hail.csv
+    local_path: data/raw/spc/2022_hail.csv
+    notes: "§1.2 H_reported input; hail 2022"
+  - pull_id: spc_hail_2023
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2023_hail.csv
+    local_path: data/raw/spc/2023_hail.csv
+    notes: "§1.2 H_reported input; hail 2023"
+  - pull_id: spc_hail_2024
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2024_hail.csv
+    local_path: data/raw/spc/2024_hail.csv
+    notes: "§1.2 H_reported input; hail 2024"
 
-  - pull_id: spc_wind_1955_2024
+  # SPC does not publish a consolidated 1955-2024 wind CSV;
+  # full coverage = 5 decade + 2 multi-year + 17 yearly files.
+  # Concat happens downstream in Phase 1 processing, not here.
+  - pull_id: spc_wind_1955_1959
     source_name: NOAA SPC wind reports
-    url: https://www.spc.noaa.gov/wcm/data/1955-2024_wind.csv
-    local_path: data/raw/spc/1955-2024_wind.csv
-    notes: "§1.2 H_reported input; damaging-wind reports"
+    url: https://www.spc.noaa.gov/wcm/data/55-59_wind.csv
+    local_path: data/raw/spc/55-59_wind.csv
+    notes: "§1.2 H_reported input; wind 1955-1959"
+  - pull_id: spc_wind_1960_1969
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/60-69_wind.csv
+    local_path: data/raw/spc/60-69_wind.csv
+    notes: "§1.2 H_reported input; wind 1960-1969"
+  - pull_id: spc_wind_1970_1979
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/70-79_wind.csv
+    local_path: data/raw/spc/70-79_wind.csv
+    notes: "§1.2 H_reported input; wind 1970-1979"
+  - pull_id: spc_wind_1980_1989
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/80-89_wind.csv
+    local_path: data/raw/spc/80-89_wind.csv
+    notes: "§1.2 H_reported input; wind 1980-1989"
+  - pull_id: spc_wind_1990_1999
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/90-99_wind.csv
+    local_path: data/raw/spc/90-99_wind.csv
+    notes: "§1.2 H_reported input; wind 1990-1999"
+  - pull_id: spc_wind_2000_2004
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2000-2004_wind.csv
+    local_path: data/raw/spc/2000-2004_wind.csv
+    notes: "§1.2 H_reported input; wind 2000-2004"
+  - pull_id: spc_wind_2005_2007
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2005-2007_wind.csv
+    local_path: data/raw/spc/2005-2007_wind.csv
+    notes: "§1.2 H_reported input; wind 2005-2007"
+  - pull_id: spc_wind_2008
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2008_wind.csv
+    local_path: data/raw/spc/2008_wind.csv
+    notes: "§1.2 H_reported input; wind 2008"
+  - pull_id: spc_wind_2009
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2009_wind.csv
+    local_path: data/raw/spc/2009_wind.csv
+    notes: "§1.2 H_reported input; wind 2009"
+  - pull_id: spc_wind_2010
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2010_wind.csv
+    local_path: data/raw/spc/2010_wind.csv
+    notes: "§1.2 H_reported input; wind 2010"
+  - pull_id: spc_wind_2011
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2011_wind.csv
+    local_path: data/raw/spc/2011_wind.csv
+    notes: "§1.2 H_reported input; wind 2011"
+  - pull_id: spc_wind_2012
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2012_wind.csv
+    local_path: data/raw/spc/2012_wind.csv
+    notes: "§1.2 H_reported input; wind 2012"
+  - pull_id: spc_wind_2013
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2013_wind.csv
+    local_path: data/raw/spc/2013_wind.csv
+    notes: "§1.2 H_reported input; wind 2013"
+  - pull_id: spc_wind_2014
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2014_wind.csv
+    local_path: data/raw/spc/2014_wind.csv
+    notes: "§1.2 H_reported input; wind 2014"
+  - pull_id: spc_wind_2015
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2015_wind.csv
+    local_path: data/raw/spc/2015_wind.csv
+    notes: "§1.2 H_reported input; wind 2015"
+  - pull_id: spc_wind_2016
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2016_wind.csv
+    local_path: data/raw/spc/2016_wind.csv
+    notes: "§1.2 H_reported input; wind 2016"
+  - pull_id: spc_wind_2017
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2017_wind.csv
+    local_path: data/raw/spc/2017_wind.csv
+    notes: "§1.2 H_reported input; wind 2017"
+  - pull_id: spc_wind_2018
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2018_wind.csv
+    local_path: data/raw/spc/2018_wind.csv
+    notes: "§1.2 H_reported input; wind 2018"
+  - pull_id: spc_wind_2019
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2019_wind.csv
+    local_path: data/raw/spc/2019_wind.csv
+    notes: "§1.2 H_reported input; wind 2019"
+  - pull_id: spc_wind_2020
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2020_wind.csv
+    local_path: data/raw/spc/2020_wind.csv
+    notes: "§1.2 H_reported input; wind 2020"
+  - pull_id: spc_wind_2021
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2021_wind.csv
+    local_path: data/raw/spc/2021_wind.csv
+    notes: "§1.2 H_reported input; wind 2021"
+  - pull_id: spc_wind_2022
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2022_wind.csv
+    local_path: data/raw/spc/2022_wind.csv
+    notes: "§1.2 H_reported input; wind 2022"
+  - pull_id: spc_wind_2023
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2023_wind.csv
+    local_path: data/raw/spc/2023_wind.csv
+    notes: "§1.2 H_reported input; wind 2023"
+  - pull_id: spc_wind_2024
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2024_wind.csv
+    local_path: data/raw/spc/2024_wind.csv
+    notes: "§1.2 H_reported input; wind 2024"
 
 # Everything below is a plan-required source that is NOT a static GET.
 # They are listed here so the gaps are explicit and reviewable. Moving any
