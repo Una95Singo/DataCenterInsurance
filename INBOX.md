@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 02:35 — §1.1 kickoff: datacentermap recon queued
+State: READY FOR NEXT SESSION (small laptop fetch pending)
+PR: —
+Branch: `phase1-data`
+Summary: Probed the sandbox before starting §1.1 — datacentermap.com, Baxtel, Cloudscene, Overpass, GCP ip-ranges all still 403; only `ip-ranges.amazonaws.com` is reachable (appears to be on a baseline allowlist, not from `.claude/settings.json`). WebFetch to datacentermap.com also 403s, so no in-sandbox path to scope the scrape exists yet. Queued two tiny recon fetches in `scripts/raw_sources.yaml` under `sources:` — `datacentermap_robots` and `datacentermap_sitemap` — which Una can pull via the same `make fetch-raw` flow he used for SPC. Next session reads `robots.txt` (crawl policy, rate-limit hints, actual sitemap paths) and `sitemap.xml` (facility URL space), then designs the paginated scraper. .gitignore whitelisted `data/raw/datacentermap/`. Registry is now 51 active / 23 todo; 8 tests pass. **Ask of Una**: on a networked machine, `git pull && make fetch-raw && git add data/raw/ && git commit && git push`. If sitemap.xml 404s, robots.txt almost certainly points to the real URL — paste the robots.txt content and I'll update the YAML.
+
 ## 2026-04-19 02:20 — Merged SPC work into phase1-data; pivoting to §1.1 DC inventory
 State: READY FOR NEXT SESSION
 PR: —

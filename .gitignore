@@ -34,6 +34,8 @@ Thumbs.db
 # writes to (mirrors the pull_ids/local_paths in scripts/raw_sources.yaml).
 !/data/raw/spc/
 !/data/raw/spc/**
+!/data/raw/datacentermap/
+!/data/raw/datacentermap/**
 
 # Project: processed data and figures are not committed
 /data/processed/*

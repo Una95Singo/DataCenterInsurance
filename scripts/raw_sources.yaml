@@ -20,6 +20,24 @@
 # the runner will report a 404 and you update the YAML.
 
 sources:
+  # ---- §1.1 DC inventory: datacentermap.com recon ----
+  # Primary spine per plan §1.1. These two GETs are recon, not the scrape
+  # itself. robots.txt tells us crawl policy (rate-limit hints, disallow
+  # paths); sitemap.xml — if present — maps the full URL space without
+  # needing to crawl listing pages. Next session uses these to design the
+  # real facility-level scraper.
+  - pull_id: datacentermap_robots
+    source_name: datacentermap.com robots.txt
+    url: https://www.datacentermap.com/robots.txt
+    local_path: data/raw/datacentermap/robots.txt
+    notes: "§1.1 recon; crawl policy + sitemap pointers"
+  - pull_id: datacentermap_sitemap
+    source_name: datacentermap.com sitemap.xml
+    url: https://www.datacentermap.com/sitemap.xml
+    local_path: data/raw/datacentermap/sitemap.xml
+    notes: "§1.1 recon; URL space for facility/metro pages; may 404 if named differently — update YAML after seeing robots.txt"
+
+  # ---- §1.2 SCS hazard: SPC trio (complete) ----
   - pull_id: spc_tornado_1950_2024
     source_name: NOAA SPC tornado database
     url: https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv
@@ -279,9 +297,9 @@ sources:
 # entry into `sources:` requires a verified URL.
 todo:
   # ---- §1.1 DC inventory ----
-  - pull_id: datacentermap_scrape
-    source_name: datacentermap.com
-    blocker: "HTML scrape; needs paginated crawler with rate limiting"
+  - pull_id: datacentermap_facility_scrape
+    source_name: datacentermap.com facility-level scrape
+    blocker: "HTML scrape; needs paginated crawler with rate limiting. Kickoff recon lives under 'sources:' (datacentermap_robots, datacentermap_sitemap)."
   - pull_id: baxtel_scrape
     source_name: Baxtel
     blocker: "HTML scrape"
