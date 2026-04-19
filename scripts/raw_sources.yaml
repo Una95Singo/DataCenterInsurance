@@ -122,6 +122,21 @@ sources:
     local_path: data/raw/datacentermap/sitemap/geos_3.xml
     notes: "§1.1 recon; geography (state/metro) sub-sitemap 3/3"
 
+  # Sample pages for next-session HTML inspection. One state listing
+  # (/usa/virginia/) and one facility detail (/usa/virginia/manassas/
+  # 10051-brickyard-wy/). Decides whether the scraper operates at
+  # state-listing or facility-page granularity.
+  - pull_id: datacentermap_sample_state_virginia
+    source_name: datacentermap.com state listing (Virginia)
+    url: https://www.datacentermap.com/usa/virginia/
+    local_path: data/raw/datacentermap/samples/usa_virginia.html
+    notes: "§1.1 recon sample; state listing page for HTML inspection"
+  - pull_id: datacentermap_sample_facility_brickyard
+    source_name: datacentermap.com facility detail (10051 Brickyard Wy)
+    url: https://www.datacentermap.com/usa/virginia/manassas/10051-brickyard-wy/
+    local_path: data/raw/datacentermap/samples/usa_virginia_manassas_10051-brickyard-wy.html
+    notes: "§1.1 recon sample; facility detail page for HTML inspection"
+
   # ---- §1.2 SCS hazard: SPC trio (complete) ----
   - pull_id: spc_tornado_1950_2024
     source_name: NOAA SPC tornado database

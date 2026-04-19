@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 03:00 — §1.1 gate CLEARED: 5,192 US facilities on datacentermap.com
+State: READY FOR REVIEW
+PR: —
+Branch: `phase1-data`
+Summary: **Top-line: datacentermap.com exposes 5,192 US facility URLs — ~10× the plan's ≥500 §1.1 acceptance gate.** State distribution matches the plan's expectations cleanly (VA 743, TX 540, CA 387, IL 296, GA 255, ..., all top-5 leaders present). 13 `dcs_*.xml` sub-sitemaps carry 13,000 facility URLs worldwide; US filter is trivial via the `/usa/` URL prefix. Full writeup in `reports/phase1_recon_datacentermap.md` (mobile-readable, ≤500 words). The open question is no longer whether the universe exists — it's whether facility-page HTML exposes enough schema fields (operator, address, MW, coordinates) or whether state listings suffice for a first pass. Queued two sample pages (`/usa/virginia/` + one Manassas facility) in `scripts/raw_sources.yaml` so next session's first move is HTML inspection, not guesswork. Scrape scale estimate: 5,192 facility pages at 2s polite delay = ~3 hours laptop time; ~50 state listings = seconds. **Ask of Una**: read `reports/phase1_recon_datacentermap.md` when convenient and flag if the "listings first, facility pages for missing fields" approach needs a different default. Otherwise, `git pull && make fetch-raw && git add data/raw/ && git commit && git push` pulls the two HTML samples and I'll propose the scrape plan next session.
+
 ## 2026-04-19 02:35 — §1.1 kickoff: datacentermap recon queued
 State: READY FOR NEXT SESSION (small laptop fetch pending)
 PR: —
