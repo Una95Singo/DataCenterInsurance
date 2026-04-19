@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 05:15 — §1.1 BLOCKED: datacentermap.com serves a "Page View Limit Reached" cap
+State: BLOCKED
+PR: —
+Branch: `claude/phase1-datacentermap-scrape-hNCrD`
+Summary: **Una ran `make scrape-dcm` on his laptop; 489 of 490 metro GETs returned a 10,114-byte "Page View Limit Reached" stub. Only `virginia/manassas.html` (207 KB, 96 facility records) got through. Final JSONL: 127 records vs. the ≥500 §1.1 gate.** The stub is explicit site policy (`<title>Page View Limit Reached</title>`), not a scraper bug — 2 s politeness does not clear it and we will not try to bypass it. Scraper infrastructure (enumerate→fetch→parse→JSONL, 31 tests passing) is correct and reusable; the source is the problem. Committed on this branch: the scraper module, the real Manassas metro HTML, one cap-page stub under `data/raw/datacentermap/evidence/` for reference, and `docs/deviations.md` entry "§1.1 datacentermap.com spine pivot". **Needs Una's decision next session** between: (a) trickle-scrape 30–50/day over ~10 days from residential IP; (b) pivot the §1.1 spine to OSM `man_made=data_center` (Overpass) + Baxtel + hyperscaler region pages, per the plan's own §1.1.2–§1.1.4 (datacentermap becomes an enrichment cross-ref); (c) combine — start (b) now so Phase 2/3 aren't blocked, run (a) in the background. Recommendation: (c). No commercial license pursued per CLAUDE.md policy. **No push to `phase1-data` yet** — the scraper code is ready but §1.1 data is not.
+
 ## 2026-04-19 04:30 — §1.1 scraper written; ready for laptop run
 State: READY FOR REVIEW (waiting on `make scrape-dcm` on a networked machine)
 PR: —
