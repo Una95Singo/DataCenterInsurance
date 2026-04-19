@@ -32,10 +32,95 @@ sources:
     local_path: data/raw/datacentermap/robots.txt
     notes: "§1.1 recon; crawl policy + sitemap pointers"
   - pull_id: datacentermap_sitemap
-    source_name: datacentermap.com sitemap.xml
+    source_name: datacentermap.com sitemap.xml (index)
     url: https://www.datacentermap.com/sitemap.xml
     local_path: data/raw/datacentermap/sitemap.xml
-    notes: "§1.1 recon; URL space for facility/metro pages; may 404 if named differently — update YAML after seeing robots.txt"
+    notes: "§1.1 recon; sitemap INDEX — points at 29 sub-sitemaps; the facility URLs live in dcs_1..dcs_13.xml"
+
+  # Sub-sitemaps enumerated from the index. Facility-level URLs are in
+  # dcs_*.xml (13 shards); state/metro pages in geos_*.xml (3 shards).
+  # Companies (7 shards), networks (2), clouds (1), ixps (1), blog, site,
+  # promotions are not relevant to §1.1 and left unfetched.
+  - pull_id: datacentermap_sitemap_dcs_1
+    source_name: datacentermap.com dcs sub-sitemap #1
+    url: https://www.datacentermap.com/sitemap/dcs_1.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_1.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 1/13"
+  - pull_id: datacentermap_sitemap_dcs_2
+    source_name: datacentermap.com dcs sub-sitemap #2
+    url: https://www.datacentermap.com/sitemap/dcs_2.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_2.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 2/13"
+  - pull_id: datacentermap_sitemap_dcs_3
+    source_name: datacentermap.com dcs sub-sitemap #3
+    url: https://www.datacentermap.com/sitemap/dcs_3.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_3.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 3/13"
+  - pull_id: datacentermap_sitemap_dcs_4
+    source_name: datacentermap.com dcs sub-sitemap #4
+    url: https://www.datacentermap.com/sitemap/dcs_4.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_4.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 4/13"
+  - pull_id: datacentermap_sitemap_dcs_5
+    source_name: datacentermap.com dcs sub-sitemap #5
+    url: https://www.datacentermap.com/sitemap/dcs_5.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_5.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 5/13"
+  - pull_id: datacentermap_sitemap_dcs_6
+    source_name: datacentermap.com dcs sub-sitemap #6
+    url: https://www.datacentermap.com/sitemap/dcs_6.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_6.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 6/13"
+  - pull_id: datacentermap_sitemap_dcs_7
+    source_name: datacentermap.com dcs sub-sitemap #7
+    url: https://www.datacentermap.com/sitemap/dcs_7.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_7.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 7/13"
+  - pull_id: datacentermap_sitemap_dcs_8
+    source_name: datacentermap.com dcs sub-sitemap #8
+    url: https://www.datacentermap.com/sitemap/dcs_8.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_8.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 8/13"
+  - pull_id: datacentermap_sitemap_dcs_9
+    source_name: datacentermap.com dcs sub-sitemap #9
+    url: https://www.datacentermap.com/sitemap/dcs_9.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_9.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 9/13"
+  - pull_id: datacentermap_sitemap_dcs_10
+    source_name: datacentermap.com dcs sub-sitemap #10
+    url: https://www.datacentermap.com/sitemap/dcs_10.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_10.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 10/13"
+  - pull_id: datacentermap_sitemap_dcs_11
+    source_name: datacentermap.com dcs sub-sitemap #11
+    url: https://www.datacentermap.com/sitemap/dcs_11.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_11.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 11/13"
+  - pull_id: datacentermap_sitemap_dcs_12
+    source_name: datacentermap.com dcs sub-sitemap #12
+    url: https://www.datacentermap.com/sitemap/dcs_12.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_12.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 12/13"
+  - pull_id: datacentermap_sitemap_dcs_13
+    source_name: datacentermap.com dcs sub-sitemap #13
+    url: https://www.datacentermap.com/sitemap/dcs_13.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_13.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 13/13"
+  - pull_id: datacentermap_sitemap_geos_1
+    source_name: datacentermap.com geos sub-sitemap #1
+    url: https://www.datacentermap.com/sitemap/geos_1.xml
+    local_path: data/raw/datacentermap/sitemap/geos_1.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 1/3"
+  - pull_id: datacentermap_sitemap_geos_2
+    source_name: datacentermap.com geos sub-sitemap #2
+    url: https://www.datacentermap.com/sitemap/geos_2.xml
+    local_path: data/raw/datacentermap/sitemap/geos_2.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 2/3"
+  - pull_id: datacentermap_sitemap_geos_3
+    source_name: datacentermap.com geos sub-sitemap #3
+    url: https://www.datacentermap.com/sitemap/geos_3.xml
+    local_path: data/raw/datacentermap/sitemap/geos_3.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 3/3"
 
   # ---- §1.2 SCS hazard: SPC trio (complete) ----
   - pull_id: spc_tornado_1950_2024

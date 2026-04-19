@@ -18,7 +18,9 @@ from __future__ import annotations
 
 import csv
 import sys
+import time
 from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 import yaml
@@ -44,6 +46,15 @@ HEADERS = {
     ),
 }
 
+# Per-host minimum gap between successive requests, in seconds. The `*`
+# group in datacentermap.com's robots.txt has no crawl-delay, but a burst
+# of rapid requests tripped their rate limiter earlier; 2s is enough to
+# stay under the threshold while keeping the full pull under a minute.
+HOST_MIN_GAP: dict[str, float] = {
+    "www.datacentermap.com": 2.0,
+}
+_last_request_at: dict[str, float] = {}
+
 
 def existing_pull_ids() -> set[str]:
     if not MANIFEST_PATH.exists() or MANIFEST_PATH.stat().st_size == 0:
@@ -52,9 +63,23 @@ def existing_pull_ids() -> set[str]:
         return {row["pull_id"] for row in csv.DictReader(f)}
 
 
+def _politeness_wait(url: str) -> None:
+    host = urlparse(url).netloc
+    gap = HOST_MIN_GAP.get(host)
+    if gap is None:
+        return
+    last = _last_request_at.get(host)
+    if last is not None:
+        elapsed = time.monotonic() - last
+        if elapsed < gap:
+            time.sleep(gap - elapsed)
+    _last_request_at[host] = time.monotonic()
+
+
 def download(url: str, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".part")
+    _politeness_wait(url)
     with requests.get(url, stream=True, timeout=TIMEOUT, headers=HEADERS) as r:
         r.raise_for_status()
         with tmp.open("wb") as f:
