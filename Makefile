@@ -2,12 +2,13 @@
 # `make all` runs every phase from a clean checkout.
 # Targets are implemented incrementally as each phase lands.
 
-.PHONY: all data audit analysis interp paper lint test clean help
+.PHONY: all data fetch-raw audit analysis interp paper lint test clean help
 
 help:
 	@echo "Targets:"
 	@echo "  all       - run the full pipeline (data -> audit -> analysis -> interp -> paper)"
 	@echo "  data      - phase 1: data collection"
+	@echo "  fetch-raw - download active sources in scripts/raw_sources.yaml"
 	@echo "  audit     - phase 2: validation & bias audit"
 	@echo "  analysis  - phase 3: spatial analysis"
 	@echo "  interp    - phase 4: findings interpretation"
@@ -20,6 +21,9 @@ all: data audit analysis interp paper
 
 data:
 	@echo "[phase 1] data collection — not yet implemented"
+
+fetch-raw:
+	python scripts/fetch_raw.py
 
 audit:
 	@echo "[phase 2] validation & bias audit — not yet implemented"

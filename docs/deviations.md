@@ -25,4 +25,9 @@ Approved by: <human> or <n/a — agent judgment>
 
 -----
 
-*No deviations logged yet.*
+## 2026-04-18 — Committing raw files due to sandbox egress block
+Changed: Raw data file storage policy (operational, not analytical)
+From: `data/raw/` is gitignored except `manifest.csv` and `README.md`; all raw files are fetched by agent scripts at runtime and live locally only.
+To: Per-source exceptions are added to `.gitignore` (starting with `data/raw/spc/`) so Una can hand-upload raw files via the GitHub web UI until sandbox egress is fixed. Manifest schema, SHA256 requirement, and reproducibility rule are unchanged.
+Reason: The agent sandbox denies outbound HTTP to every Phase 1 host (`x-deny-reason: host_not_allowed`). A proxy allowlist change was attempted but has not taken effect in this environment. Hand-upload is the fastest path to unblock Phase 1 §1.2. Once network access is restored, new pulls should go back to the fetcher path and these exceptions can be removed; the hand-uploaded files stay in git as the source-of-truth cache for those pulls.
+Approved by: Una (conversation, 2026-04-18)

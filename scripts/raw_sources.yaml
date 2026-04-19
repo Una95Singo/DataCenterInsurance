@@ -1,0 +1,477 @@
+# Phase 1 raw-data source registry.
+#
+# `sources:` — active list. `fetch_raw.py` iterates this and downloads each
+# entry. Adding a source = one new list item. Removing = delete the item
+# (the file and manifest row stay as historical record).
+#
+# `todo:` — sources the plan requires but for which the URL is behind a scrape,
+# an API with auth, a variable filename, or otherwise not a static GET. These
+# are NOT fetched; they exist as a checklist to be resolved incrementally.
+#
+# Per-source fields:
+#   pull_id      — stable short id, also used for manifest row and idempotency
+#   source_name  — human-readable
+#   url          — the GET target
+#   local_path   — repo-relative destination; parent dirs are created
+#   notes        — free-form; shows up in the manifest row
+#
+# URL confidence: the SPC trio follow a well-established naming pattern on
+# spc.noaa.gov/wcm/data/. If the year-range tail drifts (e.g., 1950-2024),
+# the runner will report a 404 and you update the YAML.
+
+sources:
+  # ---- §1.1 DC inventory: datacentermap.com recon ----
+  # Primary spine per plan §1.1. These two GETs are recon, not the scrape
+  # itself. robots.txt tells us crawl policy (rate-limit hints, disallow
+  # paths); sitemap.xml — if present — maps the full URL space without
+  # needing to crawl listing pages. Next session uses these to design the
+  # real facility-level scraper.
+  - pull_id: datacentermap_robots
+    source_name: datacentermap.com robots.txt
+    url: https://www.datacentermap.com/robots.txt
+    local_path: data/raw/datacentermap/robots.txt
+    notes: "§1.1 recon; crawl policy + sitemap pointers"
+  - pull_id: datacentermap_sitemap
+    source_name: datacentermap.com sitemap.xml (index)
+    url: https://www.datacentermap.com/sitemap.xml
+    local_path: data/raw/datacentermap/sitemap.xml
+    notes: "§1.1 recon; sitemap INDEX — points at 29 sub-sitemaps; the facility URLs live in dcs_1..dcs_13.xml"
+
+  # Sub-sitemaps enumerated from the index. Facility-level URLs are in
+  # dcs_*.xml (13 shards); state/metro pages in geos_*.xml (3 shards).
+  # Companies (7 shards), networks (2), clouds (1), ixps (1), blog, site,
+  # promotions are not relevant to §1.1 and left unfetched.
+  - pull_id: datacentermap_sitemap_dcs_1
+    source_name: datacentermap.com dcs sub-sitemap #1
+    url: https://www.datacentermap.com/sitemap/dcs_1.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_1.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 1/13"
+  - pull_id: datacentermap_sitemap_dcs_2
+    source_name: datacentermap.com dcs sub-sitemap #2
+    url: https://www.datacentermap.com/sitemap/dcs_2.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_2.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 2/13"
+  - pull_id: datacentermap_sitemap_dcs_3
+    source_name: datacentermap.com dcs sub-sitemap #3
+    url: https://www.datacentermap.com/sitemap/dcs_3.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_3.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 3/13"
+  - pull_id: datacentermap_sitemap_dcs_4
+    source_name: datacentermap.com dcs sub-sitemap #4
+    url: https://www.datacentermap.com/sitemap/dcs_4.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_4.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 4/13"
+  - pull_id: datacentermap_sitemap_dcs_5
+    source_name: datacentermap.com dcs sub-sitemap #5
+    url: https://www.datacentermap.com/sitemap/dcs_5.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_5.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 5/13"
+  - pull_id: datacentermap_sitemap_dcs_6
+    source_name: datacentermap.com dcs sub-sitemap #6
+    url: https://www.datacentermap.com/sitemap/dcs_6.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_6.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 6/13"
+  - pull_id: datacentermap_sitemap_dcs_7
+    source_name: datacentermap.com dcs sub-sitemap #7
+    url: https://www.datacentermap.com/sitemap/dcs_7.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_7.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 7/13"
+  - pull_id: datacentermap_sitemap_dcs_8
+    source_name: datacentermap.com dcs sub-sitemap #8
+    url: https://www.datacentermap.com/sitemap/dcs_8.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_8.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 8/13"
+  - pull_id: datacentermap_sitemap_dcs_9
+    source_name: datacentermap.com dcs sub-sitemap #9
+    url: https://www.datacentermap.com/sitemap/dcs_9.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_9.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 9/13"
+  - pull_id: datacentermap_sitemap_dcs_10
+    source_name: datacentermap.com dcs sub-sitemap #10
+    url: https://www.datacentermap.com/sitemap/dcs_10.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_10.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 10/13"
+  - pull_id: datacentermap_sitemap_dcs_11
+    source_name: datacentermap.com dcs sub-sitemap #11
+    url: https://www.datacentermap.com/sitemap/dcs_11.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_11.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 11/13"
+  - pull_id: datacentermap_sitemap_dcs_12
+    source_name: datacentermap.com dcs sub-sitemap #12
+    url: https://www.datacentermap.com/sitemap/dcs_12.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_12.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 12/13"
+  - pull_id: datacentermap_sitemap_dcs_13
+    source_name: datacentermap.com dcs sub-sitemap #13
+    url: https://www.datacentermap.com/sitemap/dcs_13.xml
+    local_path: data/raw/datacentermap/sitemap/dcs_13.xml
+    notes: "§1.1 recon; facility URL sub-sitemap 13/13"
+  - pull_id: datacentermap_sitemap_geos_1
+    source_name: datacentermap.com geos sub-sitemap #1
+    url: https://www.datacentermap.com/sitemap/geos_1.xml
+    local_path: data/raw/datacentermap/sitemap/geos_1.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 1/3"
+  - pull_id: datacentermap_sitemap_geos_2
+    source_name: datacentermap.com geos sub-sitemap #2
+    url: https://www.datacentermap.com/sitemap/geos_2.xml
+    local_path: data/raw/datacentermap/sitemap/geos_2.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 2/3"
+  - pull_id: datacentermap_sitemap_geos_3
+    source_name: datacentermap.com geos sub-sitemap #3
+    url: https://www.datacentermap.com/sitemap/geos_3.xml
+    local_path: data/raw/datacentermap/sitemap/geos_3.xml
+    notes: "§1.1 recon; geography (state/metro) sub-sitemap 3/3"
+
+  # Sample pages for next-session HTML inspection. One state listing
+  # (/usa/virginia/) and one facility detail (/usa/virginia/manassas/
+  # 10051-brickyard-wy/). Decides whether the scraper operates at
+  # state-listing or facility-page granularity.
+  - pull_id: datacentermap_sample_state_virginia
+    source_name: datacentermap.com state listing (Virginia)
+    url: https://www.datacentermap.com/usa/virginia/
+    local_path: data/raw/datacentermap/samples/usa_virginia.html
+    notes: "§1.1 recon sample; state listing page for HTML inspection"
+  - pull_id: datacentermap_sample_facility_brickyard
+    source_name: datacentermap.com facility detail (10051 Brickyard Wy)
+    url: https://www.datacentermap.com/usa/virginia/manassas/10051-brickyard-wy/
+    local_path: data/raw/datacentermap/samples/usa_virginia_manassas_10051-brickyard-wy.html
+    notes: "§1.1 recon sample; facility detail page for HTML inspection"
+  - pull_id: datacentermap_sample_metro_manassas
+    source_name: datacentermap.com metro listing (Manassas, VA)
+    url: https://www.datacentermap.com/usa/virginia/manassas/
+    local_path: data/raw/datacentermap/samples/usa_virginia_manassas.html
+    notes: "§1.1 recon sample; metro listing page — checks if metros embed per-facility records (would reduce scrape from 5192 facility GETs to ~150 metro GETs)"
+
+  # ---- §1.2 SCS hazard: SPC trio (complete) ----
+  - pull_id: spc_tornado_1950_2024
+    source_name: NOAA SPC tornado database
+    url: https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv
+    local_path: data/raw/spc/1950-2024_actual_tornadoes.csv
+    notes: "§1.2 H_reported input; tornado touchdowns with EF rating; consolidated 1950-2024"
+
+  # SPC does not publish a consolidated 1955-2024 hail CSV;
+  # full coverage = 5 decade + 2 multi-year + 17 yearly files.
+  # Concat happens downstream in Phase 1 processing, not here.
+  - pull_id: spc_hail_1955_1959
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/55-59_hail.csv
+    local_path: data/raw/spc/55-59_hail.csv
+    notes: "§1.2 H_reported input; hail 1955-1959"
+  - pull_id: spc_hail_1960_1969
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/60-69_hail.csv
+    local_path: data/raw/spc/60-69_hail.csv
+    notes: "§1.2 H_reported input; hail 1960-1969"
+  - pull_id: spc_hail_1970_1979
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/70-79_hail.csv
+    local_path: data/raw/spc/70-79_hail.csv
+    notes: "§1.2 H_reported input; hail 1970-1979"
+  - pull_id: spc_hail_1980_1989
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/80-89_hail.csv
+    local_path: data/raw/spc/80-89_hail.csv
+    notes: "§1.2 H_reported input; hail 1980-1989"
+  - pull_id: spc_hail_1990_1999
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/90-99_hail.csv
+    local_path: data/raw/spc/90-99_hail.csv
+    notes: "§1.2 H_reported input; hail 1990-1999"
+  - pull_id: spc_hail_2000_2004
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2000-2004_hail.csv
+    local_path: data/raw/spc/2000-2004_hail.csv
+    notes: "§1.2 H_reported input; hail 2000-2004"
+  - pull_id: spc_hail_2005_2007
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2005-2007_hail.csv
+    local_path: data/raw/spc/2005-2007_hail.csv
+    notes: "§1.2 H_reported input; hail 2005-2007"
+  - pull_id: spc_hail_2008
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2008_hail.csv
+    local_path: data/raw/spc/2008_hail.csv
+    notes: "§1.2 H_reported input; hail 2008"
+  - pull_id: spc_hail_2009
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2009_hail.csv
+    local_path: data/raw/spc/2009_hail.csv
+    notes: "§1.2 H_reported input; hail 2009"
+  - pull_id: spc_hail_2010
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2010_hail.csv
+    local_path: data/raw/spc/2010_hail.csv
+    notes: "§1.2 H_reported input; hail 2010"
+  - pull_id: spc_hail_2011
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2011_hail.csv
+    local_path: data/raw/spc/2011_hail.csv
+    notes: "§1.2 H_reported input; hail 2011"
+  - pull_id: spc_hail_2012
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2012_hail.csv
+    local_path: data/raw/spc/2012_hail.csv
+    notes: "§1.2 H_reported input; hail 2012"
+  - pull_id: spc_hail_2013
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2013_hail.csv
+    local_path: data/raw/spc/2013_hail.csv
+    notes: "§1.2 H_reported input; hail 2013"
+  - pull_id: spc_hail_2014
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2014_hail.csv
+    local_path: data/raw/spc/2014_hail.csv
+    notes: "§1.2 H_reported input; hail 2014"
+  - pull_id: spc_hail_2015
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2015_hail.csv
+    local_path: data/raw/spc/2015_hail.csv
+    notes: "§1.2 H_reported input; hail 2015"
+  - pull_id: spc_hail_2016
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2016_hail.csv
+    local_path: data/raw/spc/2016_hail.csv
+    notes: "§1.2 H_reported input; hail 2016"
+  - pull_id: spc_hail_2017
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2017_hail.csv
+    local_path: data/raw/spc/2017_hail.csv
+    notes: "§1.2 H_reported input; hail 2017"
+  - pull_id: spc_hail_2018
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2018_hail.csv
+    local_path: data/raw/spc/2018_hail.csv
+    notes: "§1.2 H_reported input; hail 2018"
+  - pull_id: spc_hail_2019
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2019_hail.csv
+    local_path: data/raw/spc/2019_hail.csv
+    notes: "§1.2 H_reported input; hail 2019"
+  - pull_id: spc_hail_2020
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2020_hail.csv
+    local_path: data/raw/spc/2020_hail.csv
+    notes: "§1.2 H_reported input; hail 2020"
+  - pull_id: spc_hail_2021
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2021_hail.csv
+    local_path: data/raw/spc/2021_hail.csv
+    notes: "§1.2 H_reported input; hail 2021"
+  - pull_id: spc_hail_2022
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2022_hail.csv
+    local_path: data/raw/spc/2022_hail.csv
+    notes: "§1.2 H_reported input; hail 2022"
+  - pull_id: spc_hail_2023
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2023_hail.csv
+    local_path: data/raw/spc/2023_hail.csv
+    notes: "§1.2 H_reported input; hail 2023"
+  - pull_id: spc_hail_2024
+    source_name: NOAA SPC hail reports
+    url: https://www.spc.noaa.gov/wcm/data/2024_hail.csv
+    local_path: data/raw/spc/2024_hail.csv
+    notes: "§1.2 H_reported input; hail 2024"
+
+  # SPC does not publish a consolidated 1955-2024 wind CSV;
+  # full coverage = 5 decade + 2 multi-year + 17 yearly files.
+  # Concat happens downstream in Phase 1 processing, not here.
+  - pull_id: spc_wind_1955_1959
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/55-59_wind.csv
+    local_path: data/raw/spc/55-59_wind.csv
+    notes: "§1.2 H_reported input; wind 1955-1959"
+  - pull_id: spc_wind_1960_1969
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/60-69_wind.csv
+    local_path: data/raw/spc/60-69_wind.csv
+    notes: "§1.2 H_reported input; wind 1960-1969"
+  - pull_id: spc_wind_1970_1979
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/70-79_wind.csv
+    local_path: data/raw/spc/70-79_wind.csv
+    notes: "§1.2 H_reported input; wind 1970-1979"
+  - pull_id: spc_wind_1980_1989
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/80-89_wind.csv
+    local_path: data/raw/spc/80-89_wind.csv
+    notes: "§1.2 H_reported input; wind 1980-1989"
+  - pull_id: spc_wind_1990_1999
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/90-99_wind.csv
+    local_path: data/raw/spc/90-99_wind.csv
+    notes: "§1.2 H_reported input; wind 1990-1999"
+  - pull_id: spc_wind_2000_2004
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2000-2004_wind.csv
+    local_path: data/raw/spc/2000-2004_wind.csv
+    notes: "§1.2 H_reported input; wind 2000-2004"
+  - pull_id: spc_wind_2005_2007
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2005-2007_wind.csv
+    local_path: data/raw/spc/2005-2007_wind.csv
+    notes: "§1.2 H_reported input; wind 2005-2007"
+  - pull_id: spc_wind_2008
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2008_wind.csv
+    local_path: data/raw/spc/2008_wind.csv
+    notes: "§1.2 H_reported input; wind 2008"
+  - pull_id: spc_wind_2009
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2009_wind.csv
+    local_path: data/raw/spc/2009_wind.csv
+    notes: "§1.2 H_reported input; wind 2009"
+  - pull_id: spc_wind_2010
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2010_wind.csv
+    local_path: data/raw/spc/2010_wind.csv
+    notes: "§1.2 H_reported input; wind 2010"
+  - pull_id: spc_wind_2011
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2011_wind.csv
+    local_path: data/raw/spc/2011_wind.csv
+    notes: "§1.2 H_reported input; wind 2011"
+  - pull_id: spc_wind_2012
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2012_wind.csv
+    local_path: data/raw/spc/2012_wind.csv
+    notes: "§1.2 H_reported input; wind 2012"
+  - pull_id: spc_wind_2013
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2013_wind.csv
+    local_path: data/raw/spc/2013_wind.csv
+    notes: "§1.2 H_reported input; wind 2013"
+  - pull_id: spc_wind_2014
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2014_wind.csv
+    local_path: data/raw/spc/2014_wind.csv
+    notes: "§1.2 H_reported input; wind 2014"
+  - pull_id: spc_wind_2015
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2015_wind.csv
+    local_path: data/raw/spc/2015_wind.csv
+    notes: "§1.2 H_reported input; wind 2015"
+  - pull_id: spc_wind_2016
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2016_wind.csv
+    local_path: data/raw/spc/2016_wind.csv
+    notes: "§1.2 H_reported input; wind 2016"
+  - pull_id: spc_wind_2017
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2017_wind.csv
+    local_path: data/raw/spc/2017_wind.csv
+    notes: "§1.2 H_reported input; wind 2017"
+  - pull_id: spc_wind_2018
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2018_wind.csv
+    local_path: data/raw/spc/2018_wind.csv
+    notes: "§1.2 H_reported input; wind 2018"
+  - pull_id: spc_wind_2019
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2019_wind.csv
+    local_path: data/raw/spc/2019_wind.csv
+    notes: "§1.2 H_reported input; wind 2019"
+  - pull_id: spc_wind_2020
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2020_wind.csv
+    local_path: data/raw/spc/2020_wind.csv
+    notes: "§1.2 H_reported input; wind 2020"
+  - pull_id: spc_wind_2021
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2021_wind.csv
+    local_path: data/raw/spc/2021_wind.csv
+    notes: "§1.2 H_reported input; wind 2021"
+  - pull_id: spc_wind_2022
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2022_wind.csv
+    local_path: data/raw/spc/2022_wind.csv
+    notes: "§1.2 H_reported input; wind 2022"
+  - pull_id: spc_wind_2023
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2023_wind.csv
+    local_path: data/raw/spc/2023_wind.csv
+    notes: "§1.2 H_reported input; wind 2023"
+  - pull_id: spc_wind_2024
+    source_name: NOAA SPC wind reports
+    url: https://www.spc.noaa.gov/wcm/data/2024_wind.csv
+    local_path: data/raw/spc/2024_wind.csv
+    notes: "§1.2 H_reported input; wind 2024"
+
+# Everything below is a plan-required source that is NOT a static GET.
+# They are listed here so the gaps are explicit and reviewable. Moving any
+# entry into `sources:` requires a verified URL.
+todo:
+  # ---- §1.1 DC inventory ----
+  - pull_id: datacentermap_facility_scrape
+    source_name: datacentermap.com facility-level scrape
+    blocker: "HTML scrape; needs paginated crawler with rate limiting. Kickoff recon lives under 'sources:' (datacentermap_robots, datacentermap_sitemap)."
+  - pull_id: baxtel_scrape
+    source_name: Baxtel
+    blocker: "HTML scrape"
+  - pull_id: cloudscene_scrape
+    source_name: Cloudscene
+    blocker: "HTML scrape; may require account for full detail"
+  - pull_id: aws_regions
+    source_name: AWS regions/AZs
+    blocker: "HTML page at aws.amazon.com/about-aws/global-infrastructure; scrape"
+  - pull_id: azure_regions
+    source_name: Azure regions
+    blocker: "HTML page at azure.microsoft.com; scrape"
+  - pull_id: gcp_regions
+    source_name: GCP regions
+    blocker: "HTML page at cloud.google.com/compute/docs/regions-zones; scrape"
+  - pull_id: osm_data_centers
+    source_name: OpenStreetMap man_made=data_center
+    blocker: "Overpass API query; not a static file"
+  - pull_id: dgtlinfra_aggregates
+    source_name: dgtlinfra metro aggregates
+    blocker: "Published as blog posts; figures must be transcribed"
+
+  # ---- §1.2 SCS hazard (beyond the SPC trio above) ----
+  - pull_id: noaa_storm_events
+    source_name: NOAA Storm Events Database
+    blocker: "Per-year CSV files at ncei.noaa.gov; filename includes a variable compilation code. Need to list current filenames."
+  - pull_id: spc_hail_climatology_grid
+    source_name: SPC hail climatology (80 km grid)
+    blocker: "Pre-computed grid; URL needs verification on spc.noaa.gov"
+  - pull_id: swdi_mesh
+    source_name: SWDI MESH radar-derived hail
+    blocker: "API-based (ncdc.noaa.gov/swdiws); query-by-region + date range"
+  - pull_id: era5_cape
+    source_name: ERA5 CAPE climatology
+    blocker: "Requires CDS account + cdsapi; long-running download"
+
+  # ---- §1.3 covariates ----
+  - pull_id: census_block_groups
+    source_name: US Census TIGER block groups
+    blocker: "50 per-state zips under www2.census.gov/geo/tiger/TIGER2023/BG/"
+  - pull_id: eia_form_861
+    source_name: EIA Form 861 (industrial electricity price)
+    blocker: "Per-year zip under eia.gov/electricity/data/eia861/archive/zip/"
+  - pull_id: fcc_form_477_broadband
+    source_name: FCC Broadband Fabric / Form 477
+    blocker: "Portal downloads at broadbandmap.fcc.gov; per-state"
+  - pull_id: pch_ixp_directory
+    source_name: Packet Clearing House IXP directory
+    blocker: "pch.net; directory has downloadable JSON but URL needs verification"
+  - pull_id: good_jobs_first_subsidies
+    source_name: Good Jobs First Subsidy Tracker
+    blocker: "Search/query UI; may need CSV export"
+  - pull_id: usgs_drought
+    source_name: USGS water / drought monitor
+    blocker: "Multiple API endpoints; scope depends on covariate choice"
+  - pull_id: noaa_cooling_degree_days
+    source_name: NOAA cooling degree days
+    blocker: "ncei.noaa.gov monitoring files; station vs gridded TBD"
+  - pull_id: usgs_nshm_pga
+    source_name: USGS NSHM 2023 (PGA 2%/50yr)
+    blocker: "Gridded data at earthquake.usgs.gov/hazards/hazmaps/; format TBD"
+  - pull_id: fema_nfhl
+    source_name: FEMA NFHL (100-yr flood zones)
+    blocker: "State geodatabases via hazards.fema.gov portal"
+  - pull_id: zillow_land
+    source_name: Zillow research data (land cost proxy)
+    blocker: "zillow.com/research/data; specific series TBD"
+  - pull_id: bls_land
+    source_name: BLS series (land cost proxy)
+    blocker: "Specific series TBD"
