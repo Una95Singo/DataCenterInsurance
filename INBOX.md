@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 02:00 — Phase 1 §1.2 SPC pulls landed
+State: RUNNING
+PR: —
+Branch: `claude/verify-spc-endpoint-pBdvG`
+Summary: All 49 SPC WCM files are on the branch with matching manifest rows (103 MB total in `data/raw/spc/`). Coverage: tornado 1950-2024 (consolidated), hail 1955-2024 (5 decade + 2 multi-year + 17 yearly), wind 1955-2024 (same split). Provenance: each row has a SHA256 + pulled_at timestamp written by `scripts/fetch_raw.py`. Discovery note for Phase 2 audit: SPC publishes a consolidated CSV only for tornadoes; hail/wind are split across 24 files each — the `_actual` tornado file name pattern doesn't apply to hail/wind. Phase 1 §1.2 still needs NOAA Storm Events DB (variable filename), SWDI/MESH (API), SPC hail climatology grid, and ERA5 CAPE (auth). §1.1 DC inventory and §1.3 covariates are untouched. **Next**: (a) cherry-pick/merge `claude/verify-spc-endpoint-pBdvG` → `phase1-data` (need Una's permission to push there), (b) decide whether to keep pushing on §1.2 (Storm Events next) or pivot to §1.1 DC inventory (first big payoff). Sandbox still can't reach external hosts from this agent session; fetches keep going via Una's laptop until a fresh session picks up the `.claude/settings.json` allowlist.
+
 ## 2026-04-18 22:45 — fetch_raw.py ready for Una to run locally
 State: BLOCKED (waiting on Una to run `make fetch-raw` on a networked machine)
 PR: —
