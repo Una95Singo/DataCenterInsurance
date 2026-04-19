@@ -50,16 +50,21 @@ The site is a Next.js SPA. Each page embeds a full JSON payload in a `<script id
 
 MW absence is expected per plan §1.1 (Baxtel / hyperscaler disclosure were already slated as MW sources). No change to the schema; downstream MW confidence flags (H/M/L) were designed for exactly this.
 
-## Revised scrape scale
+## Scrape scale — resolved
 
-At a 2-second per-host delay, 5,192 GETs × 2 s = **~3 hours laptop time**, output ~300–500 MB of HTML. If metro-listing pages embed full facility records (queued as a next-session check on `/usa/virginia/manassas/`), 100–200 metro pages suffice — seconds to minutes. The metro sample resolves this before any scraper code is written.
+Metro pages carry all facility records for their metro, with full schema (address, coords, operator, type). The Manassas page embeds 97 records in `mapdata.dcs`, each a GeoJSON Feature whose `properties` dict includes `id`, `name`, `address`, `postal`, `city`, `state`, `companyname`, `companylink` (operator), `listingtype`, `capacitytype`. Operator is actually **better-populated on metro pages than facility pages** (it was empty on the Brickyard facility sample).
 
-## Queued for next session
+The 5,192 US facility URLs map to **490 unique `(state, metro)` pairs**. Biggest metros: dallas (229), chicago (217), atlanta (187), phoenix (185), ashburn (159). 490 GETs × 2 s polite delay = **~16 minutes laptop time** for the full US universe.
 
-1. Read the Manassas metro sample to decide metro-vs-facility granularity.
-2. Write a scraper module under `src/dc_scs/inventory/` that loops the sitemap URLs, extracts `__NEXT_DATA__`, validates schema, writes JSONL + one manifest row.
-3. Run a 10-URL smoke batch before the full 5 k run.
+## Scrape design (commitment)
+
+1. Parse `data/raw/datacentermap/sitemap/dcs_*.xml` → extract unique `(state, metro)` tuples for `/usa/` URLs.
+2. For each metro: `GET /usa/{state}/{metro}/` with the browser UA and 2 s per-host delay; save raw HTML to `data/raw/datacentermap/metros/{state}/{metro}.html` and append one manifest row.
+3. Post-process: parse `__NEXT_DATA__` from each saved HTML, flatten `mapdata.dcs[*].properties` (plus geometry) to JSONL at `data/processed/datacentermap/facilities.jsonl`.
+4. Phase 2 audit reconciles facility counts against the sitemap totals (should recover ~5,192 US records, modulo the minor sitemap-vs-metro off-by-one seen in Manassas: 99 vs 97).
+
+MW is still null on the free tier. MW confidence-H/M rows will come from Baxtel + hyperscaler region lists (plan §1.1.2 / 1.1.4) in a separate pull.
 
 ## For Una
 
-Nothing required. §1.1 scope gate is cleared and the extraction path is easier than anticipated (JSON, not HTML scraping). Review if convenient; otherwise next session proposes the scraper design on top of the metro sample.
+§1.1 is ready to scrape. The raw+processed split keeps provenance intact (metro HTML is the source of truth; JSONL is a derivation that can be regenerated). No scope calls required unless you want the scraper to run against a subset (e.g., top-10 states only) for faster iteration — it defaults to all 490.

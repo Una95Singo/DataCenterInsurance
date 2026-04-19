@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 03:40 — §1.1 scrape design locked: 490 metro GETs, ~16 minutes
+State: READY FOR REVIEW
+PR: —
+Branch: `phase1-data`
+Summary: Metro sample (`/usa/virginia/manassas/`) confirms the optimization. Each metro page's `__NEXT_DATA__` carries the full facility roster for that metro — 97 GeoJSON Features on the Manassas page, each with `id`, `name`, `address`, `postal`, `city`, `state`, `latitude`, `longitude`, `companyname`, `companylink` (operator), `listingtype`, `capacitytype`. Operator is *better populated* on metros than on facility detail pages (empty on the Brickyard facility sample). 5,192 US facility URLs reduce to **490 unique `(state, metro)` pairs** — confirmed by parsing all 13 sitemap shards. At 2 s polite delay: ~16 minutes to cover the entire US §1.1 universe vs. ~3 hours for per-facility. `reports/phase1_recon_datacentermap.md` updated with the committed scrape design (raw metro HTML → `__NEXT_DATA__` parse → JSONL). **Next session**: write `scripts/scrape_datacentermap.py` + `src/dc_scs/inventory/` module (enumerate metros, fetch+manifest, flatten to JSONL, unit tests on the Manassas fixture). Smoke-test on a small subset before the full 490 run.
+
 ## 2026-04-19 03:20 — §1.1 recon: Next.js app, no HTML scraping needed
 State: READY FOR REVIEW
 PR: —
