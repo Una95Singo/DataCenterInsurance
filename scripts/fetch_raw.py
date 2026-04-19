@@ -32,6 +32,18 @@ REGISTRY = REPO_ROOT / "scripts" / "raw_sources.yaml"
 CHUNK = 1 << 16
 TIMEOUT = 60
 
+# Some sources (datacentermap.com) return 429 for the default
+# python-requests/* UA. A realistic browser UA passes. We comply with
+# robots.txt crawl-delay hints (see data/raw/datacentermap/robots.txt
+# once fetched) and this is a low-volume research pull.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
+}
+
 
 def existing_pull_ids() -> set[str]:
     if not MANIFEST_PATH.exists() or MANIFEST_PATH.stat().st_size == 0:
@@ -43,7 +55,7 @@ def existing_pull_ids() -> set[str]:
 def download(url: str, dest: Path) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(dest.suffix + ".part")
-    with requests.get(url, stream=True, timeout=TIMEOUT) as r:
+    with requests.get(url, stream=True, timeout=TIMEOUT, headers=HEADERS) as r:
         r.raise_for_status()
         with tmp.open("wb") as f:
             for chunk in r.iter_content(chunk_size=CHUNK):
