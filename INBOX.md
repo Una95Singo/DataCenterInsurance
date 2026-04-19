@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 03:20 — §1.1 recon: Next.js app, no HTML scraping needed
+State: READY FOR REVIEW
+PR: —
+Branch: `phase1-data`
+Summary: **Facility pages on datacentermap.com embed a full structured JSON payload in a `__NEXT_DATA__` script tag — no HTML scraping needed.** Per-facility `dc` object exposes id, name, address, city/state/country, lat/lon, market (metro), listingtype, capacitytype, status, stage, parent, description. Plus `owners[]` (operators — empty on the Brickyard sample but may populate on operator-owned listings). MW is null on the free tier, as expected; cross-reference with Baxtel / hyperscaler disclosures handles MW per plan §1.1. State listings (`/usa/virginia/`) carry metro-level aggregates only (e.g., Manassas=69, Ashburn=130+), not facility records — so the scrape has to go per-facility unless a metro-listing shortcut exists. Queued one more sample (`/usa/virginia/manassas/`) to check that. Recon report (`reports/phase1_recon_datacentermap.md`) updated with the JSON finding, a plan-field-accessibility table, and revised scale estimate (~3 hours for the full 5,192-URL run at 2s politeness, or seconds if metro pages suffice). **Ask of Una**: one more `git pull && make fetch-raw && git add data/raw/ && git commit && git push`. Next session: read the metro sample, write the scraper.
+
 ## 2026-04-19 03:00 — §1.1 gate CLEARED: 5,192 US facilities on datacentermap.com
 State: READY FOR REVIEW
 PR: —

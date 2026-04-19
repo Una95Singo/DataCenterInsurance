@@ -136,6 +136,11 @@ sources:
     url: https://www.datacentermap.com/usa/virginia/manassas/10051-brickyard-wy/
     local_path: data/raw/datacentermap/samples/usa_virginia_manassas_10051-brickyard-wy.html
     notes: "§1.1 recon sample; facility detail page for HTML inspection"
+  - pull_id: datacentermap_sample_metro_manassas
+    source_name: datacentermap.com metro listing (Manassas, VA)
+    url: https://www.datacentermap.com/usa/virginia/manassas/
+    local_path: data/raw/datacentermap/samples/usa_virginia_manassas.html
+    notes: "§1.1 recon sample; metro listing page — checks if metros embed per-facility records (would reduce scrape from 5192 facility GETs to ~150 metro GETs)"
 
   # ---- §1.2 SCS hazard: SPC trio (complete) ----
   - pull_id: spc_tornado_1950_2024
