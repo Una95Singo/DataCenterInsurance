@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 02:20 — Merged SPC work into phase1-data; pivoting to §1.1 DC inventory
+State: READY FOR NEXT SESSION
+PR: —
+Branch: `phase1-data` (claude/verify-spc-endpoint-pBdvG fast-forwarded in cleanly)
+Summary: Una made two decisions: (1) merge the SPC sub-track into `phase1-data` — done, both branch tips now point at `c96ea10`; (2) pivot to §1.1 DC inventory before continuing §1.2. Rationale for the pivot: §1.1 is the fragile track where the plan's fallback ("if <500 facilities, drop from facility-level to metro-level") is a real risk; better to discover that early. Next session should: (a) check whether `.claude/settings.json` allowlist is now effective in a fresh agent shell — if yes, scraping can happen in-sandbox; if no, continue the laptop-fetch pattern; (b) start on datacentermap.com as the primary spine — this is an HTML scrape with pagination and rate limiting, not a static GET, so `fetch_raw.py` is not the right tool; a dedicated scraper module under `src/dc_scs/scrape/` is. §1.2 remaining work (NOAA Storm Events DB, SWDI/MESH, SPC hail climatology grid, ERA5 CAPE) is deferred until §1.1 has a first-cut facility list.
+
 ## 2026-04-19 02:00 — Phase 1 §1.2 SPC pulls landed
 State: RUNNING
 PR: —
