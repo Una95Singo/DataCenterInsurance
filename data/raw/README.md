@@ -46,3 +46,29 @@ Paste this into `manifest.csv` after upload, then fill in `<SHA256>` and `<BYTES
 ```
 spc_tornado_1950_2024,NOAA SPC tornado database,https://www.spc.noaa.gov/wcm/data/1950-2024_actual_tornadoes.csv,2026-04-19T00:00:00Z,<SHA256>,<BYTES>,data/raw/spc/1950-2024_actual_tornadoes.csv,hand-uploaded via GitHub UI; sandbox egress blocked
 ```
+
+## datacentermap.com metro scrape (§1.1)
+
+Cached HTML layout:
+
+```
+data/raw/datacentermap/
+  robots.txt                 # crawl policy
+  sitemap.xml                # index of sub-sitemaps
+  sitemap/dcs_*.xml          # 13 sharded facility URL lists
+  sitemap/geos_*.xml         # 3 sharded geography URL lists
+  samples/                   # recon samples (state, metro, facility)
+  metros/{state}/{metro}.html    # 490 metro pages produced by scrape-dcm
+```
+
+Run from a networked machine:
+
+```
+make scrape-dcm                                   # full run (~16 min)
+python scripts/scrape_datacentermap.py --subset 3 # smoke test
+python scripts/scrape_datacentermap.py --build-only  # just rebuild JSONL
+```
+
+Each metro fetch writes one manifest row with `pull_id=dcm_metro_{state}_{metro}`.
+The derived `data/processed/datacentermap/facilities.jsonl` is rebuilt from
+the cached HTML and is NOT committed (regenerate offline at any time).

@@ -36,6 +36,12 @@ Thumbs.db
 !/data/raw/spc/**
 !/data/raw/datacentermap/
 !/data/raw/datacentermap/**
+# Per-metro HTML is ~100-200 KB × 490 metros ≈ 50-100 MB committed to the
+# repo. Matches the SPC pattern (raw SPC CSVs are also committed) and
+# the deviation in docs/deviations.md covering "raw files in git under the
+# sandbox-egress-block workaround". Derived JSONL lives under
+# data/processed/ and is NOT committed — regenerate with
+# `python scripts/scrape_datacentermap.py --build-only`.
 
 # Project: processed data and figures are not committed
 /data/processed/*

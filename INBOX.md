@@ -13,6 +13,12 @@ Summary: One paragraph.
 
 -----
 
+## 2026-04-19 04:30 — §1.1 scraper written; ready for laptop run
+State: READY FOR REVIEW (waiting on `make scrape-dcm` on a networked machine)
+PR: —
+Branch: `claude/phase1-datacentermap-scrape-hNCrD` (off `phase1-data`)
+Summary: Sandbox allowlist probe: `.claude/settings.json` lists `datacentermap.com` and `*.noaa.gov` but both hosts still return `HTTP/2 403 x-deny-reason: host_not_allowed` — the settings file is present but not effective for this sandbox. Staying on the laptop-fetch pattern. Built the §1.1 scraper per the locked design: `src/dc_scs/inventory/{metros,parse,build,fetch}.py` (enumerate → GET → parse `__NEXT_DATA__` → flatten → JSONL) and `scripts/scrape_datacentermap.py` as the CLI entrypoint with `--subset N`, `--skip-build`, `--build-only`, `--delay` flags. Manifest integration reuses `dc_scs.manifest.append_manifest_row`; per-metro `pull_id = dcm_metro_{state}_{metro}`. Added `make scrape-dcm`. Gitignore whitelist updated: committed metro HTML lives at `data/raw/datacentermap/metros/{state}/{metro}.html`; derived `data/processed/datacentermap/facilities.jsonl` is NOT committed (rebuildable via `--build-only`). Tests: **31 pass** (up from 8) — the three new test modules exercise sitemap enumeration (490 unique metros, 5192 US URLs, 13000 worldwide), parser on the Manassas fixture (96 records after dropping the `market-unmapped` sentinel; all 96 have operator populated; AWS=46/96 = 48% of NoVa's Manassas metro), build (de-dup across metros), and fetcher (patched requests; verifies politeness-gap sleep is skipped on cache hits). `ruff check` clean. **Ask of Una**: `git pull && make scrape-dcm && git add data/raw/datacentermap/metros && git commit -m "§1.1 metro scrape: 490 pages" && git push`. Smoke-test first if you want: `python scripts/scrape_datacentermap.py --subset 3`. Next session: Phase 2 audit will reconcile the JSONL record count against the sitemap's 5,192 US URLs and flag the gap; also flag any metros where operator coverage drops below Manassas's 100%.
+
 ## 2026-04-19 03:40 — §1.1 scrape design locked: 490 metro GETs, ~16 minutes
 State: READY FOR REVIEW
 PR: —
